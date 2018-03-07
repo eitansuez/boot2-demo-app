@@ -1,7 +1,6 @@
 ---
 logging:
   level:
-    ROOT: WARN
     com.example: DEBUG
 
 hello:
