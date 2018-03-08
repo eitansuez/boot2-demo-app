@@ -15,10 +15,24 @@ repositories {
 dependencies {
   compile 'org.springframework.boot:spring-boot-starter-web'
   compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+  compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 
   compile 'org.springframework.boot:spring-boot-devtools'
 
   compileOnly 'org.projectlombok:lombok'
 
+  runtime 'com.h2database:h2'
+  runtime 'mysql:mysql-connector-java'
+
   testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
+task bootRunMysql(type: org.springframework.boot.gradle.tasks.run.BootRun, dependsOn: 'build') {
+  group = 'Application'
+  description = 'Run the boot application with the mysql profile'
+  doFirst() {
+    main = 'com.example.demo.DemoApplication'
+    classpath = sourceSets.main.runtimeClasspath
+    systemProperty 'spring.profiles.active', 'mysql'
+  }
 }

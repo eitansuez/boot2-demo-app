@@ -13,8 +13,4 @@ public class DemoApplication {
     SpringApplication.run(DemoApplication.class, args);
   }
 
-  @Bean
-  public TodoRepository todoRepository() {
-    return new InMemoryTodoRepository();
-  }
 }

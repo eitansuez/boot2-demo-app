@@ -14,9 +14,9 @@ public class Runner implements CommandLineRunner {
   private final Logger logger = LoggerFactory.getLogger(Runner.class);
 
   private final HelloService helloService;
-  private final TodoRepository todoRepository;
+  private final TodoJpaRepository todoRepository;
 
-  public Runner(HelloService helloService, TodoRepository todoRepository) {
+  public Runner(HelloService helloService, TodoJpaRepository todoRepository) {
     this.helloService = helloService;
     this.todoRepository = todoRepository;
   }
@@ -25,6 +25,14 @@ public class Runner implements CommandLineRunner {
   public void run(String... args) {
     helloService.greet();
 
+    if (todoRepository.count() == 0) {
+      initializeTodos();
+    }
+
+    logger.debug("exiting run method..");
+  }
+
+  private void initializeTodos() {
     LocalDate nextWeek = LocalDate.now().plus(7, ChronoUnit.DAYS);
 
     todoRepository.save(Todo.builder()
@@ -43,8 +51,5 @@ public class Runner implements CommandLineRunner {
         .title("Fly")
         .description("Fly to some mysterious destination")
         .dueDate(nextWeek).build());
-
-
-    logger.debug("exiting run method..");
   }
 }

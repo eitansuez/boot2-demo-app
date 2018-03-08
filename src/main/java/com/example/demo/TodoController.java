@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 @Controller
 public class TodoController {
 
-  private final TodoRepository todoRepository;
+  private final TodoJpaRepository todoRepository;
 
-  public TodoController(TodoRepository todoRepository) {
+  public TodoController(TodoJpaRepository todoRepository) {
     this.todoRepository = todoRepository;
   }
 

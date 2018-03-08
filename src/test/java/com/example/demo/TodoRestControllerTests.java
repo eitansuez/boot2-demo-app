@@ -31,7 +31,7 @@ public class TodoRestControllerTests {
   private TestRestTemplate template;
 
   @MockBean
-  private TodoRepository repository;
+  private TodoJpaRepository repository;
   private Todo todo1;
 
   @Before
