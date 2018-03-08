@@ -13,33 +13,16 @@ import java.util.stream.Collectors;
 @Controller
 public class TodoController {
 
-  private final List<Todo> todoList = new ArrayList<>();
+  private final TodoRepository todoRepository;
 
-  public TodoController() {
-    LocalDate nextWeek = LocalDate.now().plus(7, ChronoUnit.DAYS);
-
-    todoList.add(Todo.builder()
-        .title("Shop")
-        .description("Go shopping ahead of trip")
-        .dueDate(nextWeek).build());
-    todoList.add(Todo.builder()
-        .title("Pack")
-        .description("Be sure to pack your things")
-        .dueDate(nextWeek).build());
-    todoList.add(Todo.builder()
-        .title("Drive")
-        .description("Drive to the airport")
-        .dueDate(nextWeek).build());
-    todoList.add(Todo.builder()
-        .title("Fly")
-        .description("Fly to some mysterious destination")
-        .dueDate(nextWeek).build());
+  public TodoController(TodoRepository todoRepository) {
+    this.todoRepository = todoRepository;
   }
 
   @GetMapping("/todos")
   public String fetchTodos(Model model) {
 
-    List<TodoViewModel> todoViews = todoList
+    List<TodoViewModel> todoViews = todoRepository.findAll()
         .stream()
         .map(TodoViewModel::new)
         .collect(Collectors.toList());
