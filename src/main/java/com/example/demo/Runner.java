@@ -14,18 +14,18 @@ public class Runner implements CommandLineRunner {
   private final Logger logger = LoggerFactory.getLogger(Runner.class);
 
   private final HelloService helloService;
-  private final TodoJpaRepository todoRepository;
+  private final TodoService todoService;
 
-  public Runner(HelloService helloService, TodoJpaRepository todoRepository) {
+  public Runner(HelloService helloService, TodoService todoService) {
     this.helloService = helloService;
-    this.todoRepository = todoRepository;
+    this.todoService = todoService;
   }
 
   @Override
   public void run(String... args) {
     helloService.greet();
 
-    if (todoRepository.count() == 0) {
+    if (todoService.count() == 0) {
       initializeTodos();
     }
 
@@ -35,19 +35,19 @@ public class Runner implements CommandLineRunner {
   private void initializeTodos() {
     LocalDate nextWeek = LocalDate.now().plus(7, ChronoUnit.DAYS);
 
-    todoRepository.save(Todo.builder()
+    todoService.addTodo(Todo.builder()
         .title("Shop")
         .description("Go shopping ahead of trip")
         .dueDate(nextWeek).build());
-    todoRepository.save(Todo.builder()
+    todoService.addTodo(Todo.builder()
         .title("Pack")
         .description("Be sure to pack your things")
         .dueDate(nextWeek).build());
-    todoRepository.save(Todo.builder()
+    todoService.addTodo(Todo.builder()
         .title("Drive")
         .description("Drive to the airport")
         .dueDate(nextWeek).build());
-    todoRepository.save(Todo.builder()
+    todoService.addTodo(Todo.builder()
         .title("Fly")
         .description("Fly to some mysterious destination")
         .dueDate(nextWeek).build());

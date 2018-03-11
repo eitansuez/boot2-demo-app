@@ -10,20 +10,20 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/todos")
 public class TodoRestController {
-  private final TodoJpaRepository todoRepository;
+  private final TodoService todoService;
 
-  public TodoRestController(TodoJpaRepository todoRepository) {
-    this.todoRepository = todoRepository;
+  public TodoRestController(TodoService todoService) {
+    this.todoService = todoService;
   }
 
   @GetMapping
   List<Todo> getTodos() {
-    return todoRepository.findAll();
+    return todoService.findAll();
   }
 
   @GetMapping("{id}")
   ResponseEntity<Todo> findById(@PathVariable Long id) {
-    Optional<Todo> result = todoRepository.findById(id);
+    Optional<Todo> result = todoService.findById(id);
     if (result.isPresent()) {
       return ResponseEntity.ok(result.get());
     }
@@ -32,15 +32,15 @@ public class TodoRestController {
 
   @PostMapping
   ResponseEntity<Todo> saveTodo(@RequestBody Todo todo) {
-    Todo savedTodo = todoRepository.save(todo);
+    Todo savedTodo = todoService.addTodo(todo);
     return new ResponseEntity<>(savedTodo, HttpStatus.CREATED);
   }
 
   @DeleteMapping("{id}")
   ResponseEntity deleteTodo(@PathVariable("id") Long id) {
-    Optional<Todo> result = todoRepository.findById(id);
+    Optional<Todo> result = todoService.findById(id);
     if (result.isPresent()) {
-      todoRepository.delete(result.get());
+      todoService.delete(result.get());
     }
     return ResponseEntity.noContent().build();
   }
