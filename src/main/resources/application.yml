@@ -1,4 +1,8 @@
 ---
+spring:
+  application:
+    name: spring-boot-demo-app
+
 logging:
   level:
     com.example: DEBUG
