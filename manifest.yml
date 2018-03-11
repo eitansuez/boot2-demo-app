@@ -4,3 +4,7 @@ applications:
   path: build/libs/demo-0.0.1-SNAPSHOT.jar
   memory: 768M
   random-route: true
+  services:
+  - todos_db
+  env:
+    SPRING_JPA_GENERATE-DDL: true
