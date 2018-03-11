@@ -22,7 +22,7 @@ public class Runner implements CommandLineRunner {
   }
 
   @Override
-  public void run(String... args) {
+  public void run(String... args) throws Exception {
     helloService.greet();
 
     if (todoService.count() == 0) {
@@ -32,7 +32,7 @@ public class Runner implements CommandLineRunner {
     logger.debug("exiting run method..");
   }
 
-  private void initializeTodos() {
+  private void initializeTodos() throws Exception {
     LocalDate nextWeek = LocalDate.now().plus(7, ChronoUnit.DAYS);
 
     todoService.addTodo(Todo.builder()

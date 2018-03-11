@@ -31,7 +31,7 @@ public class TodoRestController {
   }
 
   @PostMapping
-  ResponseEntity<Todo> saveTodo(@RequestBody Todo todo) {
+  ResponseEntity<Todo> saveTodo(@RequestBody Todo todo) throws Exception {
     Todo savedTodo = todoService.addTodo(todo);
     return new ResponseEntity<>(savedTodo, HttpStatus.CREATED);
   }
